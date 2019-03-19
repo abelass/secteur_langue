@@ -14,8 +14,15 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 
-/*
- * Un fichier de pipelines permet de regrouper
- * les fonctions de branchement de votre plugin
- * sur des pipelines existants.
- */
+function secteur_langue_header_prive($flux) {
+	$flux .='
+	<script type="text/javascript">
+		$(document).ready( function() {
+			$(".avis_source").click( function() {
+				javascript:alert("'._T('secteur_langue:avis_rubrique_source').'");
+			});
+		});
+	</script>
+	';
+	return $flux;
+}
