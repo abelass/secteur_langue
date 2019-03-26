@@ -20,6 +20,8 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *   Langue de destination
  * @param string $id_trad
  *   L'id de traduction
+ * @param bool $parent
+ *   Si true, on cherche le parent de la rubrique.
  * @param bool $creer_racine
  *   si true, il faut créer la racine
  *
@@ -29,13 +31,18 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 
 
 
-function rubrique_destination_traduction($lang, $id_trad, $creer_racine = '') {
+function rubrique_destination_traduction($lang, $id_trad, $parent = TRUE, $creer_racine = '') {
 	$id_trad_parent = '';
 	$trads = [];
 	if ($lang AND $id_trad) {
 
+		$select = 'id_rubrique';
+		if ($parent) {
+			$select = 'id_parent';
+		}
+
 		// on établit l'id_parent
-		$id_trad_parent = sql_getfetsel('id_parent', 'spip_rubriques', 'id_rubrique=' . $id_trad);
+		$id_trad_parent = sql_getfetsel($select, 'spip_rubriques', 'id_rubrique=' . $id_trad);
 
 		//puis sa traduction
 		if ($id_trad_parent) {
@@ -51,9 +58,10 @@ function rubrique_destination_traduction($lang, $id_trad, $creer_racine = '') {
 		}
 		// S'il il existe une traduction parente dans la langue demandé on retourne son id
 		elseif ($id_parent_trad) {
-			$rub = sql_fetsel('id_rubrique,id_trad', 'spip_rubriques', 'id_trad=' . $id_parent_trad . ' AND lang=' . sql_quote($lang));
-			if ($rub) {
-
+			if ($rub = sql_fetsel(
+					'id_rubrique,id_trad',
+					'spip_rubriques',
+					'id_trad=' . $id_parent_trad . ' AND lang=' . sql_quote($lang))) {
 				$trads = [
 					'id_parent_trad' => $rub['id_rubrique'],
 					'id_trad' => $id_trad,
@@ -62,22 +70,21 @@ function rubrique_destination_traduction($lang, $id_trad, $creer_racine = '') {
 			}
 			else {
 				$id_trad = sql_getfetsel('id_trad', 'spip_rubriques', 'id_trad=' . $id_parent_trad);
-				$trads = rubrique_destination_traduction($lang, $id_trad, 'oui');
-												print_r($trads);
+				$trads = rubrique_destination_traduction($lang, $id_trad, TRUE, 'oui');
 			}
 		}
 		elseif ($id_trad_parent) {
-			$trads = rubrique_destination_traduction($lang, $id_trad_parent, 'oui');
+			$trads = rubrique_destination_traduction($lang, $id_trad_parent, TRUE, 'oui');
 		}
 		else
 			$trads = [
 				'id_parent_trad' => 0,
 				'id_trad' => $id_trad,
-				'creer_racine' => $creer_racine
+				'creer_racine' => ''
 			];
 		return $trads;
 
 	}
-	return $trads;
 
+	return $trads;
 }
