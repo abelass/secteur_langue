@@ -28,9 +28,6 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * @return array
  *   un tablea avec Langue de destination, L'id de traduction et le bool creer_racine
   */
-
-
-
 function rubrique_destination_traduction($lang, $id_trad, $parent = TRUE, $creer_racine = '') {
 	$id_trad_parent = '';
 	$trads = [];
