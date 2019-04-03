@@ -17,7 +17,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function secteur_langue_header_prive($flux) {
 	$flux .='
 	<script type="text/javascript">
-		$(document).ready( function() {
+		$(document).ready(function() {
 			$(".avis_source").click( function() {
 				javascript:alert("'._T('secteur_langue:avis_rubrique_source').'");
 			});
