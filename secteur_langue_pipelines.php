@@ -38,7 +38,7 @@ function secteur_langue_header_prive($flux) {
  *   Les données du pipeline
  *
  * @return array
- *   Les donées du pipeleine.
+ *   Les données du pipeleine.
  */
 function secteur_langue_pre_edition($flux) {
 	$table = $flux['args']['table'];
