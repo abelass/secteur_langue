@@ -13,7 +13,15 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-
+/**
+ * Ajouter des contenus dans la partie <head> des pages de l’espace privé.
+ *
+ * @param array $flux
+ *   Données du pipeline.
+ *
+ * @return
+ *   Données du pipelin.
+ */
 function secteur_langue_header_prive($flux) {
 	$flux .='
 	<script type="text/javascript">

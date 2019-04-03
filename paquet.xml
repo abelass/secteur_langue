@@ -11,7 +11,6 @@
 	<nom>Secteur par langue</nom>
 	<!-- Spip multilingue avec un secteur par langue -->
 
-	<!-- cette balise peut être présente plusieurs fois s'il y a plusieurs auteurs -->
 	<auteur lien='https://web-simple.eu'>Rainer Müller</auteur>
 
 	<licence>GNU/GPL v3</licence>
